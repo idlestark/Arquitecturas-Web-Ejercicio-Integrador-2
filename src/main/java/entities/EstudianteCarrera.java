@@ -1,26 +1,33 @@
 package entities;
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class EstudianteCarrera {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    @ManyToOne (fetch = FetchType.EAGER)
+    @EmbeddedId
+    private EstudianteCarreraPK id;
+
+    @ManyToOne
+    @MapsId("dni")
     private Estudiante estudiante;
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    @ManyToOne
+    @MapsId("idCarrera")
     private Carrera carrera;
+
     @Column
-    private int antiguedad;
+    private Date fechaInscripto;
+
     @Column
     private boolean egresado;
 
-    public EstudianteCarrera (Estudiante estudiante, Carrera carrera, int antiguedad, boolean egresado) {
+    public EstudianteCarrera (EstudianteCarreraPK id, Estudiante estudiante, Carrera carrera, Date fechaInscripto, boolean egresado) {
         super();
+        this.id = id;
         this.estudiante = estudiante;
         this.carrera = carrera;
-        this.antiguedad = antiguedad;
+        this.fechaInscripto = fechaInscripto;
         this.egresado = egresado;
     }
 
@@ -28,7 +35,7 @@ public class EstudianteCarrera {
         super();
     }
 
-    public int getId() {
+    public EstudianteCarreraPK getId() {
         return id;
     }
 
@@ -40,8 +47,8 @@ public class EstudianteCarrera {
         return carrera;
     }
 
-    public int getAntiguedad() {
-        return antiguedad;
+    public Date getFechaInscripto() {
+        return fechaInscripto;
     }
 
     public boolean isEgresado() {
