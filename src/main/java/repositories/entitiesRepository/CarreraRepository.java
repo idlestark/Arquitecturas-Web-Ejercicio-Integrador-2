@@ -63,17 +63,16 @@ public class CarreraRepository implements InterfaceRepository<CarreraRepository>
         return query.getSingleResult();
     }
 
-    public static List<CarreraDTO> obtenerCarrerasPorEstudiantes (EntityManager em) {
-        String jpql = "SELECT new DTO.CarreraDTO(c.nombre, COUNT(e.Estudiante.id)) " +
+
+    public static List<CarreraDTO> obtenerCarrerasPorEstudiantesInscriptos(EntityManager em) {
+        String jpql = "SELECT new DTO.CarreraDTO(c.nombre, COUNT(ec)) " +
                 "FROM Carrera c " +
-                "JOIN Estudiante e ON e." +
-                "WHERE e.Estudiante.id IS NOT NULL " +
+                "JOIN c.estudiantes ec " +
+                "WHERE ec.estudiante IS NOT NULL " +
                 "GROUP BY c.nombre " +
-                "ORDER BY COUNT(e.id) DESC";
+                "ORDER BY COUNT(ec.estudiante.dni) DESC";
         TypedQuery<CarreraDTO> query = em.createQuery(jpql, CarreraDTO.class);
         return query.getResultList();
     }
-
-
 
 }

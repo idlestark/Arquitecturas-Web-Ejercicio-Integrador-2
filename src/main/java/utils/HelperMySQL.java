@@ -28,40 +28,10 @@ public class HelperMySQL {
         }
     }
 
-    /*
-    //CREACIÓN DE TODAS LAS TABLAS
-    public void createTables() throws SQLException {
-
-        System.out.println("Creando tablas...");
-
-        //ESTUDIANTE
-        String tablaEstudiante = "CREATE TABLE IF NOT EXISTS Estudiante (dni INT, nombre VARCHAR(50), apellido VARCHAR(50), edad INT, genero VARCHAR(50), idCiudad INT, libreta INT," +
-                "CONSTRAINT PK_ESTUDIANTE PRIMARY KEY (dni))";
-        this.conn.prepareStatement(tablaEstudiante).execute();
-        this.conn.commit();
-
-        //CARRERA
-        String tablaCarrera = "CREATE TABLE IF NOT EXISTS Carrera (idCarrera INT NOT NULL, nombre VARCHAR(50)," +
-                "CONSTRAINT PK_CARRERA PRIMARY KEY (idCarrera))";
-        this.conn.prepareStatement(tablaCarrera).execute();
-        this.conn.commit();
-
-        //ESTUDIANTE-CARRERA
-        String estudianteCarrera = "CREATE TABLE IF NOT EXISTS Estudiante_Carrera (dniEstudiante INT, idCarrera INT, fechaIngreso TIMESTAMP(6), egresado BOOLEAN," +
-                "CONSTRAINT PK_DNI_ESTUDIANTE_CARRERA PRIMARY KEY (dniEstudiante)," +
-                "CONSTRAINT PK_ID_ESTUDIANTE_CARRERA PRIMARY KEY (idCarrera)," +
-                "CONSTRAINT FK_DNI_ESTUDIANTE_CARRERA FOREIGN KEY dniEstudiante REFERENCES Estudiante (dni)," +
-                "CONSTRAINT FK_ID_ESTUDIANTE_CARRERA FOREIGN KEY idCarrera REFERENCES Carrera (idCarrera)";
-        this.conn.prepareStatement(estudianteCarrera).execute();
-        this.conn.commit();
-
-    }
-    */
-
     //LLENADO DE TABLAS DE LA BASE DE DATOS
     public void populateDB() throws SQLException {
 
-        System.out.println("Llenando tablas... Me gusta ver videos donde la gente le pega a jubilados, me produce un nivel de excitación muy grande.");
+        System.out.println("Llenando tablas...");
 
         String insertEstudiante = "INSERT INTO Estudiante (dni, nombre, apellido, edad, genero, ciudad, lu) VALUES" +
                 "(40111333, 'JUAN', 'BECKHAM', 22, 'MASCULINO', 'CONCORDIA', 9), " +
@@ -72,6 +42,9 @@ public class HelperMySQL {
                 "(40125333, 'FLORENCIA', 'FERNANDEZ', 16, 'FEMENINO', 'LOS ANTIGUOS', 87), " +
                 "(40754401, 'FRANCO', 'SENILLOSA', 24, 'MASCULINO','SAN LUIS', 76), " +
                 "(23456881, 'JULIANA', 'JURADO', 25, 'FEMENINO', 'LOBERÍA', 56), " +
+                "(44377943, 'IGNACIO', 'AGÜERA', 21, 'MASCULINO', 'TANDIL', 91), " +
+                "(43795577, 'IÑAKI', 'MARTINEZ', 22, 'MASCULINO', 'TANDIL', 92), " +
+                "(43972532, 'LUCA', 'IBARRA', 22, 'MASCULINO', 'TANDIL', 69), " +
                 "(20111555, 'NICOLAS', 'ALVAREZ', 24, 'FEMENINO', 'TRENQUE LAUQUEN', 20)";
         this.conn.prepareStatement(insertEstudiante).execute();
         this.conn.commit();
@@ -95,12 +68,15 @@ public class HelperMySQL {
                 "(40111333, 101, '2023-03-23', 0), " +
                 "(40999222, 108, '2017-05-16', 1), " +
                 "(41123366, 109, '2024-01-05', 0), " +
-                "(40125333, 102, '2018-12-27', 1), " +
+                "(40125333, 103, '2018-12-27', 1), " +
                 "(18723011, 110, '2020-05-20', 1), " +
                 "(43667112, 104, '2010-01-21', 0), " +
                 "(23456881, 107, '2016-04-21', 1), " +
                 "(40754401, 109, '2016-04-21', 1), " +
-                "(20111555, 105, '2005-03-23', 0) ";
+                "(20111555, 105, '2005-03-23', 0)," +
+                "(44377943, 101, '2022-03-15', 0)," +
+                "(43795577, 101, '2022-03-16', 0)," +
+                "(43972532, 101, '2022-04-07', 0)";
         this.conn.prepareStatement(insertEstudianteCarrera).execute();
         this.conn.commit();
 
@@ -117,7 +93,6 @@ public class HelperMySQL {
                 e.printStackTrace();
             }
         }
-
     }
 
 
@@ -138,7 +113,6 @@ public class HelperMySQL {
         String dropEstudiante = "DROP TABLE IF EXISTS Estudiante";
         this.conn.prepareStatement(dropEstudiante).execute();
         this.conn.commit();
-
     }
 
     //CERRAR LA CONEXIÓN
@@ -151,5 +125,4 @@ public class HelperMySQL {
             }
         }
     }
-
 }

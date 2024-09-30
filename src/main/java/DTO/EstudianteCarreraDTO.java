@@ -26,11 +26,11 @@ public class EstudianteCarreraDTO {
                 this.nombre = nombre;
         }
 
-        public int getAnio() {
+
+   public int getAnio() {
                 return anio;
         }
-
-        public void setAnio(int anio) {
+         public void setAnio(int anio) {
                 this.anio = anio;
         }
 

@@ -47,12 +47,14 @@ public class Main {
         estudianteRep.insert(em, estudiante);
         System.out.println("/////////////////////////////////////////");
         System.out.println("/////////////////////////////////////////");
+
         //EJERCICIO 2.B (MATRICULAR UN ESTUDIANTE EN UNA CARRERA)
         Carrera carrera = (Carrera) carreraRep.select(em, 101);
         EstudianteCarrera inscripcion = new EstudianteCarrera(new EstudianteCarreraPK(17007007, 101), estudiante, carrera, Date.valueOf("2020-01-01"), false);
         estudianteCarreraRep.insert(em, inscripcion);
         System.out.println("/////////////////////////////////////////");
         System.out.println("/////////////////////////////////////////");
+
         //EJERCICIO 2.C (RECUPERAR TODOS LOS ESTUDIANTES Y ESPECIFICAR ALGUN CIRITERIO DE ORDENAMIENTO SIMPLE)
         List<EstudianteDTO> estudiantes = estudianteRep.obtenerEstudiantes(em, "APELLIDO", "DESC");
         System.out.println(" 2 - c - Lista completa de estudiantes ordenados: ");
@@ -61,6 +63,7 @@ public class Main {
         }
         System.out.println("/////////////////////////////////////////");
         System.out.println("/////////////////////////////////////////");
+
         //EJERCICIO 2.D (RECUPERAR UN ESTUDIANTE EN BASE A SU NUMERO DE LIBRETA UNIVERSITARIA)
         EstudianteDTO estu = new EstudianteDTO();
         int lu = 20;
@@ -69,6 +72,7 @@ public class Main {
         System.out.println(estu);
         System.out.println("/////////////////////////////////////////");
         System.out.println("/////////////////////////////////////////");
+
         //EJERCICIO 2.E (RECUPERAR TODOS LOS ESTUDIANTES, EN BASE A SU GENERO)
         System.out.println(" 2 - E - Lista de estudiantes por genero");
         List<EstudianteDTO> estudiantesGenero = estudianteRep.obtenerEstudiantesPorGenero(em, "MASCULINO");
@@ -78,17 +82,33 @@ public class Main {
         }
         System.out.println("/////////////////////////////////////////");
         System.out.println("/////////////////////////////////////////");
-        //EJERCICIO 2.F (RECUPERAR LAS CARRERAS CON ESTUDIANTES INSCRIPTOS, Y ORDENAR POR CANTIDAD DE INSCRIPTOS)
-        System.out.println("Carreras por inscriptos");
 
-        for(CarreraDTO c: carreraRep.obtenerCarrerasPorEstudiantes(em)){
+
+        //EJERCICIO 2.F (RECUPERAR LAS CARRERAS CON ESTUDIANTES INSCRIPTOS, Y ORDENAR POR CANTIDAD DE INSCRIPTOS)
+        System.out.println("Carreras por estudiantes inscriptos");
+        for(CarreraDTO c: carreraRep.obtenerCarrerasPorEstudiantesInscriptos(em)) {
             System.out.println(c);
         }
-
         System.out.println("/////////////////////////////////////////");
         System.out.println("/////////////////////////////////////////");
 
-        //Ejercicio 2.G
+        //Ejercicio 2.G (RECUPERAR ESTUDIANTES DE UNA DETERMINADA CARRERA, FILTRADO POR CIUDAD DE RECIDENCIA)
+        System.out.println("Estudiantes Ordenados por Carrera y Ciudad: ");
+
+        for(EstudianteDTO e: estudianteRep.obtenerEstudiantePorCarreraYCiudad(em, "TUDAI", "Tandil")) {
+            System.out.println(e);
+        }
+
+        System.out.println("/////////////////////////////////////");
+        System.out.println("/////////////////////////////////////");
+
+        //EJERCICIO 3
+
+        System.out.println("Generar Reporte: ");
+        System.out.println(estudianteCarreraRep.reporteCarreras(em));
+
+        em.close();
+        emf.close();
 
         }
 

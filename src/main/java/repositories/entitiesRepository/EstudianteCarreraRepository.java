@@ -66,18 +66,17 @@ public class EstudianteCarreraRepository implements InterfaceRepository<Estudian
     }
 
 
-    public static List<EstudianteCarreraDTO> generarReporteCarreras(EntityManager em) {
+    public static List<EstudianteCarreraDTO> reporteCarreras(EntityManager em) {
 
-        String jpql = "SELECT new DTO.EstudianteCarreraDTO(c.nombre, YEAR(ec.antiguedad), COUNT(ec.estudiante.id), SUM(CASE WHEN e.graduado = TRUE THEN 1 ELSE 0 END)) " +
+        String jpql = "SELECT new DTO.EstudianteCarreraDTO(c.nombre, YEAR(ec.fechaInscripto), COUNT(ec.estudiante.id), SUM(CASE WHEN ec.egresado = TRUE THEN 1 ELSE 0 END)) " +
                 "FROM EstudianteCarrera ec " +
                 "JOIN ec.carrera c " +
                 "JOIN ec.estudiante e " +
-                "GROUP BY c.nombre, YEAR(ec.antiguedad)";
+                "GROUP BY c.nombre, YEAR(ec.fechaInscripto)";
 
         TypedQuery<EstudianteCarreraDTO> query = em.createQuery(jpql, EstudianteCarreraDTO.class);
         List<EstudianteCarreraDTO> resultados = query.getResultList();
 
-        // Ordenar los resultados en memoria por año (segundo campo del DTO)
         resultados.sort(Comparator.comparing(EstudianteCarreraDTO::getAnio));
 
         return resultados;
