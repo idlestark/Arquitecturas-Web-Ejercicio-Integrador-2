@@ -24,7 +24,6 @@ public class Main {
         //CREACIÓN DEL HELPER
         HelperMySQL helperMySQL = new HelperMySQL();
         helperMySQL.dropTables();
-        //helperMySQL.createTables();
 
         //CREACIÓN DEL ENTITY MANAGER
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Example");
@@ -68,7 +67,7 @@ public class Main {
         EstudianteDTO estu = new EstudianteDTO();
         int lu = 20;
         estu = estudianteRep.obtenerEstudianteLu(em, lu);
-        System.out.println(" 2 - D - Estudiante con la libreta " + lu + ": la clase pasada me hice una bolsillera en el salón mientras el profesor me explicaba como arreglar el programa");
+        System.out.println(" 2 - D - Estudiante con la libreta " + lu + ": ");
         System.out.println(estu);
         System.out.println("/////////////////////////////////////////");
         System.out.println("/////////////////////////////////////////");
@@ -91,7 +90,6 @@ public class Main {
         }
         System.out.println("/////////////////////////////////////////");
         System.out.println("/////////////////////////////////////////");
-
         //Ejercicio 2.G (RECUPERAR ESTUDIANTES DE UNA DETERMINADA CARRERA, FILTRADO POR CIUDAD DE RECIDENCIA)
         System.out.println("Estudiantes Ordenados por Carrera y Ciudad: ");
 
@@ -107,9 +105,11 @@ public class Main {
         System.out.println("Generar Reporte: ");
         System.out.println(estudianteCarreraRep.reporteCarreras(em));
 
+        em.getTransaction().commit();
         em.close();
         emf.close();
 
-        }
     }
+
+}
 
